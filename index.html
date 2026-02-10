@@ -2,6 +2,7 @@
 <html lang="en">
 <head>
   <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>AI Video Quiz</title>
   <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@500;700&display=swap" rel="stylesheet">
   <style>
@@ -25,13 +26,16 @@
       border-radius: 12px;
       box-shadow: 0 4px 15px rgba(0,0,0,0.1);
     }
-    h1 {
-      margin-top: 0;
-      font-weight: 700;
+    h1 { margin-top: 0; font-weight: 700; }
+    #progress {
+      text-align: center;
+      font-weight: 600;
+      margin-bottom: 15px;
     }
     iframe {
       width: 100%;
-      height: 400px;
+      aspect-ratio: 16 / 9;
+      height: auto;
       border-radius: 8px;
       margin-bottom: 20px;
     }
@@ -57,12 +61,12 @@
       transition: transform 0.2s ease, background 0.3s ease;
       width: 120px;
     }
-    .choices button:hover {
-      transform: scale(1.05);
-    }
+    .choices button:hover { transform: scale(1.05); }
+
     .age { background: #9C27B0; color: white; }
     .video1 { background: #4CAF50; color: white; }
     .video2 { background: #2196F3; color: white; }
+
     .gen-label {
       margin-top: 8px;
       font-size: 14px;
@@ -76,8 +80,29 @@
     .choices.video-section {
       display: flex;
       justify-content: center;
-      gap: 60px; /* wider spacing between Video 1 and Video 2 */
+      gap: 60px;
       margin-top: 20px;
+    }
+
+    @media (max-width: 600px) {
+      header { padding: 15px; }
+      h1 { font-size: 22px; }
+      h2 { font-size: 18px; }
+      .quiz-container {
+        margin: 15px;
+        padding: 20px;
+      }
+      .choices.age-section,
+      .choices.video-section {
+        flex-direction: column;
+        gap: 15px;
+      }
+      .choices button {
+        width: 100%;
+        font-size: 16px;
+        padding: 14px;
+      }
+      .gen-label { font-size: 13px; }
     }
   </style>
 </head>
@@ -85,10 +110,10 @@
   <header>
     <h1>AI Video Quiz</h1>
   </header>
-
   <div class="quiz-container">
+    <div id="progress"></div>
+
     <div id="question-area">
-      <!-- Respondent info first -->
       <h2>Please select your age range:</h2>
       <div class="choices age-section">
         <div class="choice-block">
@@ -109,91 +134,82 @@
         </div>
       </div>
     </div>
+
     <div id="result" class="result"></div>
   </div>
 
   <script>
-    // 15 total questions
     const questions = [
-      { video: "https://www.youtube.com/embed/3wVpVH0Wa6E", text: "Which video is AI?" },
-      { video: "https://www.youtube.com/embed/ANOTHER_VIDEO_ID1", text: "Which video is AI?" },
-      { video: "https://www.youtube.com/embed/ANOTHER_VIDEO_ID2", text: "Which video is AI?" },
-      { video: "https://www.youtube.com/embed/ANOTHER_VIDEO_ID3", text: "Which video is AI?" },
-      { video: "https://www.youtube.com/embed/ANOTHER_VIDEO_ID4", text: "Which video is AI?" },
-      { video: "https://www.youtube.com/embed/ANOTHER_VIDEO_ID5", text: "Which video is AI?" },
-      { video: "https://www.youtube.com/embed/ANOTHER_VIDEO_ID6", text: "Which video is AI?" },
-      { video: "https://www.youtube.com/embed/ANOTHER_VIDEO_ID7", text: "Which video is AI?" },
-      { video: "https://www.youtube.com/embed/ANOTHER_VIDEO_ID8", text: "Which video is AI?" },
-      { video: "https://www.youtube.com/embed/ANOTHER_VIDEO_ID9", text: "Which video is AI?" },
-      { video: "https://www.youtube.com/embed/ANOTHER_VIDEO_ID10", text: "Which video is AI?" },
-      { video: "https://www.youtube.com/embed/ANOTHER_VIDEO_ID11", text: "Which video is AI?" },
-      { video: "https://www.youtube.com/embed/ANOTHER_VIDEO_ID12", text: "Which video is AI?" },
-      { video: "https://www.youtube.com/embed/ANOTHER_VIDEO_ID13", text: "Which video is AI?" },
-      { video: "https://www.youtube.com/embed/ANOTHER_VIDEO_ID14", text: "Which video is AI?" }
+      { video: "https://www.youtube.com/embed/3wVpVH0Wa6E", text: "Which one is AI?", correct: "Video 1" },
+      { video: "https://www.youtube.com/embed/dQw4w9WgXcQ", text: "Which one is AI?", correct: "Video 2" },
+      { video: "https://www.youtube.com/embed/5NV6Rdv1a3I", text: "Which one is AI?", correct: "Video 1" },
+      { video: "https://www.youtube.com/embed/2vjPBrBU-TM", text: "Which one is AI?", correct: "Video 2" },
+      { video: "https://www.youtube.com/embed/2vjPBrBU-TM", text: "Which one is AI?", correct: "Video 2" },
+      { video: "https://www.youtube.com/embed/2vjPBrBU-TM", text: "Which one is AI?", correct: "Video 2" },
+      { video: "https://www.youtube.com/embed/2vjPBrBU-TM", text: "Which one is AI?", correct: "Video 2" },
+      { video: "https://www.youtube.com/embed/2vjPBrBU-TM", text: "Which one is AI?", correct: "Video 2" },
+      { video: "https://www.youtube.com/embed/2vjPBrBU-TM", text: "Which one is AI?", correct: "Video 2" },
+      { video: "https://www.youtube.com/embed/2vjPBrBU-TM", text: "Which one is AI?", correct: "Video 2" },
+      { video: "https://www.youtube.com/embed/2vjPBrBU-TM", text: "Which one is AI?", correct: "Video 2" },
+      { video: "https://www.youtube.com/embed/2vjPBrBU-TM", text: "Which one is AI?", correct: "Video 2" },
+      { video: "https://www.youtube.com/embed/2vjPBrBU-TM", text: "Which one is AI?", correct: "Video 2" },
+      { video: "https://www.youtube.com/embed/2vjPBrBU-TM", text: "Which one is AI?", correct: "Video 2" },
+      { video: "https://www.youtube.com/embed/2vjPBrBU-TM", text: "Which one is AI?", correct: "Video 2" },
+      // ... add more questions with correct: "Video 1" or "Video 2"
     ];
 
     let currentQuestion = 0;
-    let userAnswers = [];
     let respondentAge = "";
     let respondentGeneration = "";
+    let score = 0;
+
+    function updateProgress() {
+      document.getElementById("progress").innerText = `Question ${currentQuestion + 1} of ${questions.length}`;
+    }
 
     function setAge(ageRange, generation) {
       respondentAge = ageRange;
       respondentGeneration = generation;
       document.getElementById("result").innerText = `Age range selected: ${ageRange} (${generation})`;
-      // Load first quiz question
-      setTimeout(() => {
-        loadQuestion();
-      }, 1000);
+      setTimeout(loadQuestion, 800);
     }
 
     function answer(choice) {
-      userAnswers.push({
-        question: questions[currentQuestion].text,
-        choice: choice
-      });
+      let correctAnswer = questions[currentQuestion].correct; // ✅ checks per-question correct answer
 
-      document.getElementById("result").innerText =
-        `You selected: ${choice}`;
+      if (choice === correctAnswer) {
+        score++;
+      }
+
+      document.getElementById("result").innerText = `You selected: ${choice}`;
 
       setTimeout(() => {
         currentQuestion++;
         if (currentQuestion < questions.length) {
           loadQuestion();
         } else {
-          document.getElementById("question-area").innerHTML =
-            "<h2>Quiz Complete!</h2>";
+          document.getElementById("question-area").innerHTML = `
+            <h2>Quiz Complete!</h2>
+            <p>Your age range: ${respondentAge} (${respondentGeneration})</p>
+            <p>You got ${score} out of ${questions.length} correct.</p>
+          `;
+          document.getElementById("progress").innerText = "";
         }
-      }, 1500);
+      }, 1200);
     }
 
     function loadQuestion() {
+      updateProgress();
+
       document.getElementById("question-area").innerHTML = `
         <h2>${questions[currentQuestion].text}</h2>
-        <iframe id="quiz-video" src="${questions[currentQuestion].video}" frameborder="0" allowfullscreen></iframe>
+        <iframe src="${questions[currentQuestion].video}" frameborder="0" allowfullscreen></iframe>
         <div class="choices video-section">
           <button class="video1" onclick="answer('Video 1')">Video 1</button>
           <button class="video2" onclick="answer('Video 2')">Video 2</button>
         </div>
       `;
       document.getElementById("result").innerText = "";
-    }
-
-    // Hidden export function — trigger manually from console
-    function downloadCSV() {
-      let csvContent = "data:text/csv;charset=utf-8,Age Range,Generation,Question,Answer\n";
-      userAnswers.forEach(row => {
-        csvContent += `${respondentAge},${respondentGeneration},${row.question},${row.choice}\n`;
-      });
-
-      const encodedUri = encodeURI(csvContent);
-      const link = document.createElement("a");
-      link.setAttribute("href", encodedUri);
-      link.setAttribute("download", "quiz_answers.csv");
-      document.body.appendChild(link);
-      link.click();
-
-      // NOTE: The CSV file will be downloaded to your browser's default "Downloads" folder.
     }
   </script>
 </body>
