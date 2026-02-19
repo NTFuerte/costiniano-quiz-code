@@ -134,83 +134,107 @@
         </div>
       </div>
     </div>
-
-    <div id="result" class="result"></div>
+<div id="age-result" class="result"></div>
+<div id="answer-result" class="result"></div>
   </div>
 
-  <script>
-    const questions = [
-      { video: "https://www.youtube.com/embed/3wVpVH0Wa6E", text: "Which one is AI?", correct: "Video 1" },
-      { video: "https://www.youtube.com/embed/dQw4w9WgXcQ", text: "Which one is AI?", correct: "Video 2" },
-      { video: "https://www.youtube.com/embed/5NV6Rdv1a3I", text: "Which one is AI?", correct: "Video 1" },
-      { video: "https://www.youtube.com/embed/2vjPBrBU-TM", text: "Which one is AI?", correct: "Video 2" },
-      { video: "https://www.youtube.com/embed/2vjPBrBU-TM", text: "Which one is AI?", correct: "Video 2" },
-      { video: "https://www.youtube.com/embed/2vjPBrBU-TM", text: "Which one is AI?", correct: "Video 2" },
-      { video: "https://www.youtube.com/embed/2vjPBrBU-TM", text: "Which one is AI?", correct: "Video 2" },
-      { video: "https://www.youtube.com/embed/2vjPBrBU-TM", text: "Which one is AI?", correct: "Video 2" },
-      { video: "https://www.youtube.com/embed/2vjPBrBU-TM", text: "Which one is AI?", correct: "Video 2" },
-      { video: "https://www.youtube.com/embed/2vjPBrBU-TM", text: "Which one is AI?", correct: "Video 2" },
-      { video: "https://www.youtube.com/embed/2vjPBrBU-TM", text: "Which one is AI?", correct: "Video 2" },
-      { video: "https://www.youtube.com/embed/2vjPBrBU-TM", text: "Which one is AI?", correct: "Video 2" },
-      { video: "https://www.youtube.com/embed/2vjPBrBU-TM", text: "Which one is AI?", correct: "Video 2" },
-      { video: "https://www.youtube.com/embed/2vjPBrBU-TM", text: "Which one is AI?", correct: "Video 2" },
-      { video: "https://www.youtube.com/embed/2vjPBrBU-TM", text: "Which one is AI?", correct: "Video 2" },
-      // ... add more questions with correct: "Video 1" or "Video 2"
-    ];
+<script>
+const questions = [
+  { video: "https://www.youtube.com/embed/PHqbESeLHIs", text: "Which one is AI?", correct: "Video 2" },
+  { video: "https://www.youtube.com/embed/H43HlJJ9Gbs", text: "Which one is AI?", correct: "Video 2" },
+  { video: "https://www.youtube.com/embed/xGkNU3uwfq0", text: "Which one is AI?", correct: "Video 1" },
+  { video: "https://www.youtube.com/embed/fpcwKJgKG54", text: "Which one is AI?", correct: "Video 2" },
+  { video: "https://www.youtube.com/embed/8mM_BbYcGNc", text: "Which one is AI?", correct: "Video 2" },
+  { video: "https://www.youtube.com/embed/vXTIT_VA1q0", text: "Which one is AI?", correct: "Video 1" },
+  { video: "https://www.youtube.com/embed/Aj21mrNOeEk", text: "Which one is AI?", correct: "Video 2" },
+  { video: "https://www.youtube.com/embed/lXLbWjUV8sE", text: "Which one is AI?", correct: "Video 1" },
+  { video: "https://www.youtube.com/embed/9bZkp7q19f0", text: "Which one is AI?", correct: "Video 1" },
+  { video: "https://www.youtube.com/embed/uelHwf8o7_U", text: "Which one is AI?", correct: "Video 2" },
+  { video: "https://www.youtube.com/embed/ktvTqknDobU", text: "Which one is AI?", correct: "Video 1" },
+  { video: "https://www.youtube.com/embed/OPf0YbXqDm0", text: "Which one is AI?", correct: "Video 2" },
+  { video: "https://www.youtube.com/embed/fLexgOxsZu0", text: "Which one is AI?", correct: "Video 1" },
+  { video: "https://www.youtube.com/embed/SlPhMPnQ58k", text: "Which one is AI?", correct: "Video 2" },
+  { video: "https://www.youtube.com/embed/2Vv-BfVoq4g", text: "Which one is AI?", correct: "Video 1" }
+];
 
-    let currentQuestion = 0;
-    let respondentAge = "";
-    let respondentGeneration = "";
-    let score = 0;
+let currentQuestion = 0;
+let respondentAge = "";
+let respondentGeneration = "";
+let score = 0;
 
-    function updateProgress() {
-      document.getElementById("progress").innerText = `Question ${currentQuestion + 1} of ${questions.length}`;
-    }
+function updateProgress() {
+  document.getElementById("progress").innerText =
+    `Question ${currentQuestion + 1} of ${questions.length}`;
+}
 
-    function setAge(ageRange, generation) {
-      respondentAge = ageRange;
-      respondentGeneration = generation;
-      document.getElementById("result").innerText = `Age range selected: ${ageRange} (${generation})`;
-      setTimeout(loadQuestion, 800);
-    }
+function setAge(ageRange, generation) {
+  respondentAge = ageRange;
+  respondentGeneration = generation;
+  setTimeout(loadQuestion, 800);
+}
 
-    function answer(choice) {
-      let correctAnswer = questions[currentQuestion].correct; // ✅ checks per-question correct answer
+function answer(choice) {
+  document.querySelectorAll(".choices button").forEach(btn => btn.disabled = true);
 
-      if (choice === correctAnswer) {
-        score++;
-      }
+  let correctAnswer = questions[currentQuestion].correct;
+  let isCorrect = (choice === correctAnswer);
 
-      document.getElementById("result").innerText = `You selected: ${choice}`;
+  if (isCorrect) {
+    score++;
+  }
 
-      setTimeout(() => {
-        currentQuestion++;
-        if (currentQuestion < questions.length) {
-          loadQuestion();
-        } else {
-          document.getElementById("question-area").innerHTML = `
-            <h2>Quiz Complete!</h2>
-            <p>Your age range: ${respondentAge} (${respondentGeneration})</p>
-            <p>You got ${score} out of ${questions.length} correct.</p>
-          `;
-          document.getElementById("progress").innerText = "";
-        }
-      }, 1200);
-    }
-
-    function loadQuestion() {
-      updateProgress();
-
+  
+// When quiz completes, send results to Google Sheet
+fetch("https://script.google.com/macros/s/AKfycbxuLC2qqYBvqF5qF8pGmQu5llsACSKJoEBHOPhae7b8NQkErX0NISrWsjtrVC_7hEVIyg/exec", {
+  method: "POST",
+  body: JSON.stringify({
+    generation: respondentGeneration,          // Age-based generation
+    summary: `${score}/${questions.length}`    // Compact score summary
+  })
+})
+.then(res => res.text())
+.then(text => {
+  console.log("Submitted to Google Sheet:", text);
+})
+.catch(err => {
+  console.error("Error submitting:", err);
+});
+  setTimeout(() => {
+    currentQuestion++;
+    if (currentQuestion < questions.length) {
+      loadQuestion();
+    } else {
       document.getElementById("question-area").innerHTML = `
-        <h2>${questions[currentQuestion].text}</h2>
-        <iframe src="${questions[currentQuestion].video}" frameborder="0" allowfullscreen></iframe>
-        <div class="choices video-section">
-          <button class="video1" onclick="answer('Video 1')">Video 1</button>
-          <button class="video2" onclick="answer('Video 2')">Video 2</button>
-        </div>
+        <h2>Quiz Complete!</h2>
+        <p>Your age range: ${respondentAge} (${respondentGeneration})</p>
+        <p>You got ${score} out of ${questions.length} correct.</p>
       `;
-      document.getElementById("result").innerText = "";
+      document.getElementById("progress").innerText = "";
+
+      // Clear the answer feedback so it doesn’t show after quiz completion
+      document.getElementById("answer-result").innerText = "";
     }
-  </script>
+  }, 800);
+}
+
+function loadQuestion() {
+  updateProgress();
+
+  document.getElementById("question-area").innerHTML = `
+    <h2>${questions[currentQuestion].text}</h2>
+    <iframe src="${questions[currentQuestion].video}" frameborder="0" allowfullscreen></iframe>
+    <div class="choices video-section">
+      <button class="video1" onclick="answer('Video 1')">Video 1</button>
+      <button class="video2" onclick="answer('Video 2')">Video 2</button>
+    </div>
+  `;
+
+  // Re-enable buttons
+  document.querySelectorAll(".choices button").forEach(btn => btn.disabled = false);
+
+  // Clear previous answer feedback
+  document.getElementById("answer-result").innerText = "";
+}
+</script>
 </body>
 </html>
