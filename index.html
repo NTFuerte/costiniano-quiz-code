@@ -140,21 +140,23 @@
 
 <script>
 const questions = [
-  { video: "https://www.youtube.com/embed/PHqbESeLHIs", text: "Which one is AI?", correct: "Video 2" },
-  { video: "https://www.youtube.com/embed/H43HlJJ9Gbs", text: "Which one is AI?", correct: "Video 2" },
-  { video: "https://www.youtube.com/embed/xGkNU3uwfq0", text: "Which one is AI?", correct: "Video 1" },
-  { video: "https://www.youtube.com/embed/fpcwKJgKG54", text: "Which one is AI?", correct: "Video 2" },
-  { video: "https://www.youtube.com/embed/8mM_BbYcGNc", text: "Which one is AI?", correct: "Video 2" },
-  { video: "https://www.youtube.com/embed/vXTIT_VA1q0", text: "Which one is AI?", correct: "Video 1" },
-  { video: "https://www.youtube.com/embed/Aj21mrNOeEk", text: "Which one is AI?", correct: "Video 2" },
-  { video: "https://www.youtube.com/embed/lXLbWjUV8sE", text: "Which one is AI?", correct: "Video 1" },
-  { video: "https://www.youtube.com/embed/fSI6BG3oY6c", text: "Which one is AI?", correct: "Video 2" },
-  { video: "https://www.youtube.com/embed/yffYnQe_JE4", text: "Which one is AI?", correct: "Video 2" },
-  { video: "https://www.youtube.com/embed/DbhkcwJCBDs", text: "Which one is AI?", correct: "Video 1" },
-  { video: "https://www.youtube.com/embed/tXiM7N0yVNA", text: "Which one is AI?", correct: "Video 2" },
-  { video: "https://www.youtube.com/embed/3lOa_x_WDQw", text: "Which one is AI?", correct: "Video 1" },
-  { video: "https://www.youtube.com/embed/Y4pd98sA3RI", text: "Which one is AI?", correct: "Video 1" },
-  { video: "https://www.youtube.com/embed/Vi87Q3SYjtw", text: "Which one is AI?", correct: "Video 2" }
+  { video: "https://www.youtube.com/embed/PHqbESeLHIs", text: "Which one is AI?", correct: "Video 2" }, // Q1
+  { video: "https://www.youtube.com/embed/H43HlJJ9Gbs", text: "Which one is AI?", correct: "Video 2" }, // Q2
+  { video: "https://www.youtube.com/embed/xGkNU3uwfq0", text: "Which one is AI?", correct: "Video 1" }, // Q3
+  { video: "https://www.youtube.com/embed/fpcwKJgKG54", text: "Which one is AI?", correct: "Video 2" }, // Q4
+  { video: "https://www.youtube.com/embed/8mM_BbYcGNc", text: "Which one is AI?", correct: "Video 2" }, // Q5
+  { video: "https://www.youtube.com/embed/5OdHD85dkfg", text: "Which one is AI?", correct: "Video 1" }, // Q6
+  { video: "https://www.youtube.com/embed/Aj21mrNOeEk", text: "Which one is AI?", correct: "Video 2" }, // Q7
+  { video: "https://www.youtube.com/embed/lXLbWjUV8sE", text: "Which one is AI?", correct: "Video 1" }, // Q8
+
+  // ✅ Updated videos 9–15 with your links and correct answers
+  { video: "https://www.youtube.com/embed/fSI6BG3oY6c", text: "Which one is AI?", correct: "Video 2" }, // Q9
+  { video: "https://www.youtube.com/embed/yffYnQe_JE4", text: "Which one is AI?", correct: "Video 2" }, // Q10
+  { video: "https://www.youtube.com/embed/DbhkcwJCBDs", text: "Which one is AI?", correct: "Video 1" }, // Q11
+  { video: "https://www.youtube.com/embed/tXiM7N0yVNA", text: "Which one is AI?", correct: "Video 2" }, // Q12
+  { video: "https://www.youtube.com/embed/3lOa_x_WDQw", text: "Which one is AI?", correct: "Video 1" }, // Q13
+  { video: "https://www.youtube.com/embed/Y4pd98sA3RI", text: "Which one is AI?", correct: "Video 1" }, // Q14
+  { video: "https://www.youtube.com/embed/Vi87Q3SYjtw", text: "Which one is AI?", correct: "Video 2" }  // Q15
 ];
 
 let currentQuestion = 0;
@@ -183,40 +185,38 @@ function answer(choice) {
     score++;
   }
 
-  
-// When quiz completes, send one final row to Google Sheet
-fetch("https://script.google.com/macros/s/AKfycbxBvUOp-NCSVwrrARIAWEgNqATB0_MD6zWqACERo9PowrVmb3x8TiOVW-FS807-wbAwzg/exec", {
-  method: "POST",
-  body: JSON.stringify({
-    generation: respondentGeneration,          // Age-based generation
-    summary: `${score}/${questions.length}`    // Final score summary like 8/15
-  })
-})
-.then(res => res.text())
-.then(text => {
-  console.log("Submitted to Google Sheet:", text);
-})
-.catch(err => {
-  console.error("Error submitting:", err);
-});
   setTimeout(() => {
     currentQuestion++;
     if (currentQuestion < questions.length) {
       loadQuestion();
     } else {
+      // ✅ Only send data once, after quiz is finished
+      fetch("https://script.google.com/macros/s/AKfycbyH_ffPIsJ8yMJpewsRhCGHP2MqcFQX57KCQWc4GC6zesWlh5di3FQVVD_O-uRSnI1BOA/exec", {
+        method: "POST",
+        body: JSON.stringify({
+          generation: respondentGeneration,          // Age-based generation
+          summary: `${score}/${questions.length}`    // Final score only
+        })
+      })
+      .then(res => res.text())
+      .then(text => {
+        console.log("Submitted to Google Sheet:", text);
+      })
+      .catch(err => {
+        console.error("Error submitting:", err);
+      });
+
+      // Show results
       document.getElementById("question-area").innerHTML = `
         <h2>Quiz Complete!</h2>
         <p>Your age range: ${respondentAge} (${respondentGeneration})</p>
         <p>You got ${score} out of ${questions.length} correct.</p>
       `;
       document.getElementById("progress").innerText = "";
-
-      // Clear the answer feedback so it doesn’t show after quiz completion
       document.getElementById("answer-result").innerText = "";
     }
   }, 800);
 }
-
 function loadQuestion() {
   updateProgress();
 
