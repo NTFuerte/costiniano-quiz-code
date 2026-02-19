@@ -148,13 +148,13 @@ const questions = [
   { video: "https://www.youtube.com/embed/vXTIT_VA1q0", text: "Which one is AI?", correct: "Video 1" },
   { video: "https://www.youtube.com/embed/Aj21mrNOeEk", text: "Which one is AI?", correct: "Video 2" },
   { video: "https://www.youtube.com/embed/lXLbWjUV8sE", text: "Which one is AI?", correct: "Video 1" },
-  { video: "https://www.youtube.com/embed/9bZkp7q19f0", text: "Which one is AI?", correct: "Video 1" },
-  { video: "https://www.youtube.com/embed/uelHwf8o7_U", text: "Which one is AI?", correct: "Video 2" },
-  { video: "https://www.youtube.com/embed/ktvTqknDobU", text: "Which one is AI?", correct: "Video 1" },
-  { video: "https://www.youtube.com/embed/OPf0YbXqDm0", text: "Which one is AI?", correct: "Video 2" },
-  { video: "https://www.youtube.com/embed/fLexgOxsZu0", text: "Which one is AI?", correct: "Video 1" },
-  { video: "https://www.youtube.com/embed/SlPhMPnQ58k", text: "Which one is AI?", correct: "Video 2" },
-  { video: "https://www.youtube.com/embed/2Vv-BfVoq4g", text: "Which one is AI?", correct: "Video 1" }
+  { video: "https://www.youtube.com/embed/fSI6BG3oY6c", text: "Which one is AI?", correct: "Video 2" },
+  { video: "https://www.youtube.com/embed/yffYnQe_JE4", text: "Which one is AI?", correct: "Video 2" },
+  { video: "https://www.youtube.com/embed/DbhkcwJCBDs", text: "Which one is AI?", correct: "Video 1" },
+  { video: "https://www.youtube.com/embed/tXiM7N0yVNA", text: "Which one is AI?", correct: "Video 2" },
+  { video: "https://www.youtube.com/embed/3lOa_x_WDQw", text: "Which one is AI?", correct: "Video 1" },
+  { video: "https://www.youtube.com/embed/Y4pd98sA3RI", text: "Which one is AI?", correct: "Video 1" },
+  { video: "https://www.youtube.com/embed/Vi87Q3SYjtw", text: "Which one is AI?", correct: "Video 2" }
 ];
 
 let currentQuestion = 0;
@@ -184,12 +184,12 @@ function answer(choice) {
   }
 
   
-// When quiz completes, send results to Google Sheet
-fetch("https://script.google.com/macros/s/AKfycbxuLC2qqYBvqF5qF8pGmQu5llsACSKJoEBHOPhae7b8NQkErX0NISrWsjtrVC_7hEVIyg/exec", {
+// When quiz completes, send one final row to Google Sheet
+fetch("https://script.google.com/macros/s/AKfycbxBvUOp-NCSVwrrARIAWEgNqATB0_MD6zWqACERo9PowrVmb3x8TiOVW-FS807-wbAwzg/exec", {
   method: "POST",
   body: JSON.stringify({
     generation: respondentGeneration,          // Age-based generation
-    summary: `${score}/${questions.length}`    // Compact score summary
+    summary: `${score}/${questions.length}`    // Final score summary like 8/15
   })
 })
 .then(res => res.text())
