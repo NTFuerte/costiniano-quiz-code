@@ -1,0 +1,52 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>AI Deepfake Detection Quiz</title>
+  <link href="https://fonts.googleapis.com/css2?family=Cabin:wght@400;700&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="style.css">
+</head>
+<body>
+  <!-- Header -->
+  <header>
+    <h1 style="font-family:'Cabin', sans-seriff;">AI Deepfake Detection Quiz</h1>
+  </header>
+
+  <!-- Start Page -->
+  <div id="start-page" class="start-container">
+  <h1>Test your ability to spot AI-generated deepfake content</h1>
+  <hr>  
+
+  <p>
+    In today’s digital world, deepfake videos have become prominent on social media 
+    applications (e.g., Facebook, Instagram, TikTok) and are sometimes difficult to 
+    distinguish what is actually real from what is fake due to the advancements of AI technology.
+  </p>
+  
+  <p>
+    This 5-minute <b>AI Deepfake Detection Quiz</b> will test your ability to identify 
+    AI-generated deepfake videos from real videos.
+  </p>
+  
+  <p>
+    Your anonymous response will help researchers better understand how people of 
+    different age groups identify AI-generated deepfake videos, which will lead to 
+    improved education and digital awareness.
+  </p>
+  
+  <button id="start-button" class="start-btn">Start Quiz</button>
+</div>
+
+  <!-- Quiz Area (hidden initially) -->
+  <div id="quiz-area" class="quiz-container" style="display:none;">
+    <div id="progress"></div>
+    <div id="question-area"></div>
+    <div id="age-result" class="result"></div>
+    <div id="answer-result" class="result"></div>
+  </div>
+
+  <!-- External JS -->
+  <script src="script.js"></script>
+</body>
+</html>
