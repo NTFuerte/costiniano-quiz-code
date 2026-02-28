@@ -141,6 +141,7 @@ button:hover,
 
 /* ✅ Start Quiz Button (dedicated section) */
 #start-button {
+  border-radius: 999px;
   background: #040f43;   /* same base color as age buttons */
   color: #fff;
   width: 200px;          /* slightly larger to stand out */
@@ -149,6 +150,7 @@ button:hover,
 
 /* ✅ Age Buttons */
 .age {
+  border-radius: 999px;
   background: #7a92ff;
   color: #fff;
   width: 140px;
