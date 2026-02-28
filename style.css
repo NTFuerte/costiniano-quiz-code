@@ -1,0 +1,198 @@
+<style>
+/* ✅ Base Styles */
+body, h1, h2, h3, p, div {
+  font-family: 'Cabin', sans-serif !important;
+}
+p, div {
+  font-weight: 400;
+}
+
+h1, h2, h3, strong, b {
+  font-weight: 700;
+  color: #040f43;
+}
+
+/* Apply Cabin to everything inside the quiz */
+.quiz-container, 
+.quiz-container h1, 
+.quiz-container h2, 
+.quiz-container p, 
+.quiz-container button {
+  font-family: 'Cabin', sans-serif !important;
+}
+
+/* ✅ Header */
+header {
+  background: #c4d0e8;
+  color: #040f43;
+  padding: 20px;
+  text-align: center;
+  border-bottom: 3px solid #7a92ff;
+}
+
+/* ✅ Start Page Container */
+.start-container {
+  max-width: 700px;
+  margin: 60px auto;
+  padding: 40px;
+  background: #fff;
+  border-radius: 12px;
+  box-shadow: 0 6px 18px rgba(0,0,0,0.08);
+  text-align: center;
+}
+
+/* ✅ Title */
+.start-container h1 {
+  font-family: 'Cabin', sans-serif;
+  font-size: 28px;
+  font-weight: 700;
+  color: #040f43;
+  margin-bottom: 20px;
+}
+
+/* ✅ Paragraphs */
+.start-container p {
+  font-family: 'Cabin', sans-serif;
+  font-size: 16px;
+  line-height: 1.6;
+  color: #333;
+  margin-bottom: 20px;
+}
+
+/* ✅ Start Button */
+.start-btn {
+  background: #040f43;
+  color: #040f43;
+  font-size: 18px;
+  font-weight: 600;
+  padding: 12px 30px;
+  border: none;
+  border-radius: 8px;
+  cursor: pointer;
+  transition: background 0.3s ease;
+}
+
+.start-btn:hover {
+  background: #040f43;
+}
+
+/* ✅ Quiz Container */
+.quiz-container {
+  max-width: 700px;
+  margin: 40px auto;
+  padding: 30px;
+  background: #fff;
+  border-radius: 12px;
+  box-shadow: 0 6px 18px rgba(0,0,0,0.08);
+}
+
+h1 { margin-top: 0; }
+
+/* ✅ Progress Bar */
+#progress {
+  text-align: center;
+  font-weight: 600;
+  margin-bottom: 15px;
+  color: #4b88ff;
+}
+
+/* ✅ Video Frame */
+iframe {
+  width: 100%;
+  aspect-ratio: 16 / 9;
+  border-radius: 8px;
+  margin-bottom: 20px;
+  border: none;
+}
+
+/* ✅ Choices Layout */
+.choices.age-section,
+.choices.video-section {
+  display: flex;
+  justify-content: center;
+  gap: 20px;
+  flex-wrap: wrap;
+  margin-top: 20px;
+}
+
+.choice-block {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+
+/* ✅ Shared Button Base */
+button,
+.choices button {
+  padding: 14px 20px;
+  font-size: 18px;
+  font-weight: 600;
+  border: none;
+  border-radius: 8px;
+  cursor: pointer;
+  transition: transform 0.2s ease, background 0.3s ease, box-shadow 0.3s ease;
+}
+
+button:hover,
+.choices button:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 4px 12px rgba(0,0,0,0.15);
+}
+
+/* ✅ Start Quiz Button (dedicated section) */
+#start-button {
+  background: #040f43;   /* same base color as age buttons */
+  color: #fff;
+  width: 200px;          /* slightly larger to stand out */
+  margin-top: 20px;
+}
+
+/* ✅ Age Buttons */
+.age {
+  background: #7a92ff;
+  color: #fff;
+  width: 140px;
+}
+
+/* ✅ Video Buttons */
+.video1 {
+  background: #8875ff;
+  color: #fff;
+  width: 140px;
+}
+
+.video2 {
+  background: #4b88ff;
+  color: #fff;
+  width: 140px;
+}
+
+/* ✅ Results */
+.result {
+  margin-top: 20px;
+  font-weight: 600;
+  text-align: center;
+  color: #040f43;
+}
+
+/* ✅ Responsive */
+@media (max-width: 600px) {
+  header { padding: 15px; }
+  h1 { font-size: 22px; }
+  h2 { font-size: 18px; }
+  .quiz-container { margin: 15px; padding: 20px; }
+  .choices.age-section,
+  .choices.video-section { flex-direction: column; gap: 15px; }
+  button,
+  .choices button { width: 100%; font-size: 16px; padding: 12px; }
+  #start-button { width: 100%; }
+}
+
+/* ✅ Utility */
+.justified { text-align: justify; }
+hr {
+  border: none;
+  border-top: 2px solid #7a92ff;
+  margin: 20px 0;
+}
+  </style>
